@@ -32,3 +32,4 @@ npm run dev
 App will run on: http://localhost:5173
 <br>Spring API runs on: http://localhost:8080
 
+A test user has been added with username: testuser password: password
