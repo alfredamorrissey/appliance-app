@@ -33,3 +33,9 @@ App will run on: http://localhost:5173
 <br>Spring API runs on: http://localhost:8080
 
 A test user has been added with username: testuser password: password
+
+You can see the H2 Database: http://localhost:8080/h2-console/login.jsp?jsessionid=b5dcba6a4cafbeb12a02e7492a95406a<br>
+JDBC Url: jdbc:h2:mem:testdb
+username: sa<br>
+password: password
+
