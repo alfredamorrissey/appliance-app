@@ -8,7 +8,10 @@ This appliance management app was built with Vue.js for the frontend and Spring 
 
 Clone the repo to your local machine:
 
-`git clone https://github.com/alfredamorrissey/appliance-app.git`
+```
+git clone https://github.com/alfredamorrissey/appliance-app.git
+git checkout master
+```
 
 Enter the root directory
 
