@@ -62,7 +62,7 @@ public class ApplianceControllerTest {
         List<Appliance> result = applianceController.turnOffAll(1L);
 
         assertEquals(0, ((Fan) result.get(0)).getSpeed());
-        assertNull(((AC) result.get(1)).getTemperature());
+        assertFalse(((AC) result.get(1)).getIsOn());
     }
 
     @Test
@@ -81,6 +81,7 @@ public class ApplianceControllerTest {
         ac.setId(3L);
         ac.setUser(mockUser);
         ac.setTemperature(24);
+        ac.setIsOn(true);
 
         when(applianceRepo.findByUserId(1L)).thenReturn(List.of(light, fan, ac));
 

@@ -33,7 +33,7 @@ public class ApplianceController {
                     } else if (appliance instanceof Fan fan) {
                         return new FanDTO(fan.getId(), fan.getSpeed());
                     } else if (appliance instanceof AC ac) {
-                        return new ACDTO(ac.getId(), ac.getTemperature());
+                        return new ACDTO(ac.getId(), ac.getTemperature(), ac.getIsOn());
                     } else {
                         return null;
                     }
@@ -56,8 +56,8 @@ public class ApplianceController {
         switch (dto.getType()) {
             case "LIGHT" -> {
                 if (appliance instanceof Light light && dto instanceof LightDTO lightDTO) {
-                    System.out.println("DTO status: " + lightDTO.getStatus());
-                    light.setIsOn(lightDTO.getStatus());
+                    //System.out.println("DTO status: " + lightDTO.getStatus());
+                    light.setIsOn(lightDTO.getIsOn());
                 }
             }
             case "FAN" -> {
@@ -68,12 +68,69 @@ public class ApplianceController {
             case "AC" -> {
                 if (appliance instanceof AC ac && dto instanceof ACDTO acDTO) {
                     ac.setTemperature(acDTO.getTemperature());
+                    ac.setIsOn(acDTO.getIsOn());
                 }
             }
         }
 
         applianceRepo.save(appliance);
     }
+
+    @PutMapping("/off/{applianceId}")
+    public void turnOffAppliance(@PathVariable Long applianceId) {
+        Appliance appliance = applianceRepo.findById(applianceId).orElseThrow();
+        appliance.off();
+        applianceRepo.save(appliance);
+    }
+
+    @PutMapping("/on/{applianceId}")
+    public void turnOnAppliance(@PathVariable Long applianceId, @RequestBody ApplianceDTO dto) {
+        Appliance appliance = applianceRepo.findById(applianceId).orElseThrow();
+        switch (dto.getType()) {
+            case "LIGHT" -> {
+                if (appliance instanceof Light light) {
+                    light.setIsOn(true);
+                }
+            }
+            case "AC" -> {
+                if (appliance instanceof AC ac) {
+                    ac.setIsOn(true);
+                }
+            }
+        }
+        applianceRepo.save(appliance);
+    }
+
+    @PutMapping("/increase/{applianceId}")
+    public void increaseSpeed(@PathVariable Long applianceId, @RequestBody ApplianceDTO dto) {
+        Appliance appliance = applianceRepo.findById(applianceId).orElseThrow();
+        switch (dto.getType()) {
+            case "FAN" -> {
+                if (appliance instanceof Fan fan) {
+                    Integer newSpeed = fan.getSpeed()+1;
+                    fan.setSpeed(newSpeed > 3 ? 0 : newSpeed);
+                }
+            }
+        }
+        applianceRepo.save(appliance);
+    }
+
+    @PutMapping("/decrease/{applianceId}")
+    public void decreaseSpeed(@PathVariable Long applianceId, @RequestBody ApplianceDTO dto) {
+        Appliance appliance = applianceRepo.findById(applianceId).orElseThrow();
+        switch (dto.getType()) {
+            case "FAN" -> {
+                if (appliance instanceof Fan fan) {
+                    Integer newSpeed = fan.getSpeed()-1;
+                    fan.setSpeed(newSpeed < 0 ? 3 : newSpeed);
+                    applianceRepo.save(fan);
+                }
+            }
+        }
+
+    }
+
+
 
     @PostMapping("/offAll/{userId}")
     public List<Appliance> turnOffAll(@PathVariable Long userId) {

@@ -1,5 +1,8 @@
 package com.example.applianceapp.dto;
 
+/**
+ * The Fan can have speed 0 to 3. 0 means the power is off.
+ */
 public class FanDTO extends ApplianceDTO {
     private int speed;
 

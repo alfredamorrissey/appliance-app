@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <h1>My Appliances</h1>
-    <div v-for="appliance in appliances" :key="appliance.id">
-      <LightControl v-if="appliance.type === 'LIGHT'" :appliance="appliance" @update="refresh" />
-      <FanControl v-else-if="appliance.type === 'FAN'" :appliance="appliance" @update="refresh" />
-      <ACControl v-else-if="appliance.type === 'AC'" :appliance="appliance" @update="refresh" />
+  <div class="p-6">
+    <h2 class="text-2xl font-bold mb-4">Your Appliances</h2>
+    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div v-for="appliance in appliances" :key="appliance.id">
+            <LightControl v-if="appliance.type === 'LIGHT'" :appliance="appliance" @update="refresh" />
+            <FanControl v-else-if="appliance.type === 'FAN'" :appliance="appliance" @update="refresh" />
+            <ACControl v-else-if="appliance.type === 'AC'" :appliance="appliance" @update="refresh" />
+          </div>
     </div>
+    <button @click="off"
+                  class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Turn All Off</button>
   </div>
 </template>
 
@@ -29,6 +33,11 @@ const refresh = async () => {
     // Handle case where user is not logged in or user ID is missing
     appliances.value = [];
   }
+};
+
+const off = async () => {
+  await api.turnAllAppliancesOff(authStore.user);
+  refresh();
 };
 
 onMounted(refresh);  // Call refresh when the component is mounted

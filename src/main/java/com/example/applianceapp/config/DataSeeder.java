@@ -29,6 +29,7 @@ public class DataSeeder {
 
                 AC ac = new AC();
                 ac.setTemperature(22);
+                ac.setIsOn(true);
                 ac.setUser(user);
 
                 applianceRepo.save(light);

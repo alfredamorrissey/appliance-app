@@ -13,10 +13,11 @@ import lombok.*;
 @AllArgsConstructor
 public class AC extends Appliance {
     private Integer temperature;
+    private Boolean isOn;
 
     @Override
     public void off() {
-        this.temperature = null;
+        this.isOn = false;
     }
 
 }

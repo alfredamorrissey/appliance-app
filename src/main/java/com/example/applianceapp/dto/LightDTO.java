@@ -1,26 +1,29 @@
 package com.example.applianceapp.dto;
 
+/**
+ * The light can be turned off by toggling a switch to the "off" position.
+ */
 public class LightDTO extends ApplianceDTO {
-    private boolean status;
+    private boolean isOn;
 
     public LightDTO() {
         super();
         setType("LIGHT");
     }
 
-    public LightDTO(Long id, boolean status) {
+    public LightDTO(Long id, boolean isOn) {
         super(id, "LIGHT");
-        this.status = status;
+        this.isOn = isOn;
     }
 
     // getters
-    public boolean getStatus() {
-        return this.status;
+    public boolean getIsOn() {
+        return this.isOn;
     }
 
     // setters
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setIsOn(boolean isOn) {
+        this.isOn = isOn;
     }
 }
 
